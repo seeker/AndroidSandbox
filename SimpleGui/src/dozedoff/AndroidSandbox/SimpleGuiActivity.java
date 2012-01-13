@@ -18,9 +18,8 @@ public class SimpleGuiActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        text  = new TextView(this);
-        button  = new Button(this);
-        button.setVisibility(Button.VISIBLE);
+        text = (TextView)this.findViewById(R.id.text);
+        button = (Button)this.findViewById(R.id.button);
         
         updateText();
         button.setOnClickListener(new Button.OnClickListener() {
