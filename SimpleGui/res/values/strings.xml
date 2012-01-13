@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="push">Push Me!</string><string name="app_name">SimpleGui</string>
+    <string name="push">Push Me!</string>
+    <string name="app_name">A simple GUI demo</string>
+    <string name="toast">A Toast!</string>
     
 
 </resources>
