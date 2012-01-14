@@ -51,6 +51,14 @@ public class AndroidSQLiteActivity extends Activity {
 		});
     }
     
+    @Override
+    protected void onDestroy() {
+    	if(db != null){
+    		db.close();
+    	}
+    	super.onDestroy();
+    }
+    
     private ContentValues addText(String text){
     	ContentValues content = new ContentValues();
     	content.put("simplestring", text);
