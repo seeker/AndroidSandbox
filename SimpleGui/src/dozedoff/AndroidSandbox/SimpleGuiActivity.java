@@ -1,7 +1,10 @@
 package dozedoff.AndroidSandbox;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +22,7 @@ public class SimpleGuiActivity extends Activity {
 	private Button btnToast;
 	private EditText txtInput;
 	private TableLayout table;
+	private ArrayList<String> savedEntry = new ArrayList<String>();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -58,6 +62,7 @@ public class SimpleGuiActivity extends Activity {
 						toast.show();
 						TextView newtext = new TextView(getApplicationContext());
 						newtext.setText(txtInput.getText());
+						savedEntry.add(newtext.getText().toString());
 						table.addView(newtext);
 						txtInput.setText("");
 						return true;
@@ -66,6 +71,29 @@ public class SimpleGuiActivity extends Activity {
 				return false;
 			}
 		});
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putStringArrayList("entry", savedEntry);
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		if(savedInstanceState.getStringArrayList("entry") == null){
+			savedEntry = new ArrayList<String>();
+			savedEntry.add("Return was NULL");
+		}else{
+			savedEntry = savedInstanceState.getStringArrayList("entry");
+		}
+		
+		for(String s : savedEntry){
+			TextView tv = new TextView(getApplicationContext());
+			tv.setText(s);
+			table.addView(tv);
+		}
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	private void updateText(){
