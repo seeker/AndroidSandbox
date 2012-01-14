@@ -19,58 +19,56 @@ public class SimpleGuiActivity extends Activity {
 	private Button btnToast;
 	private EditText txtInput;
 	private TableLayout table;
-	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        text = (TextView)this.findViewById(R.id.text);
-        button = (Button)this.findViewById(R.id.button);
-        btnToast = (Button)this.findViewById(R.id.btnToast);
-        txtInput = (EditText)this.findViewById(R.id.txtInput);
-        table = (TableLayout)this.findViewById(R.id.table);
-        
-        updateText();
-        button.setOnClickListener(new OnClickListener() {
-			
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		text = (TextView)this.findViewById(R.id.text);
+		button = (Button)this.findViewById(R.id.button);
+		btnToast = (Button)this.findViewById(R.id.btnToast);
+		txtInput = (EditText)this.findViewById(R.id.txtInput);
+		table = (TableLayout)this.findViewById(R.id.table);
+
+		updateText();
+		button.setOnClickListener(new OnClickListener() {
+
 			public void onClick(View v) {
 				counter++;
 				updateText();
 			}
 		});
-        
-        btnToast.setOnClickListener(new OnClickListener() {
-			
+
+		btnToast.setOnClickListener(new OnClickListener() {
+
 			public void onClick(View v) {
-			Toast toast = Toast.makeText(getApplicationContext(), "A Toast to you!", 1);
-			toast.show();
+				Toast toast = Toast.makeText(getApplicationContext(), "A Toast to you!", 1);
+				toast.show();
 			}
 		});
-        
-        txtInput.setOnEditorActionListener(new OnEditorActionListener() {
-			
+
+		txtInput.setOnEditorActionListener(new OnEditorActionListener() {
+
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
 					if(! txtInput.equals("")){
-					Toast toast = Toast.makeText(getApplicationContext(), "You entered the text: "+txtInput.getText(), 1);
-					toast.show();
-					TextView newtext = new TextView(getApplicationContext());
-					newtext.setText(txtInput.getText());
-					table.addView(newtext);
-					txtInput.setText("");
-					return true;
+						Toast toast = Toast.makeText(getApplicationContext(), "You entered the text: "+txtInput.getText(), 1);
+						toast.show();
+						TextView newtext = new TextView(getApplicationContext());
+						newtext.setText(txtInput.getText());
+						table.addView(newtext);
+						txtInput.setText("");
+						return true;
 					}
 				}
 				return false;
 			}
 		});
-    }
-    
-    
-    
-    private void updateText(){
-    	text.setText("Button pressed "+counter+" times.");
-    }
+	}
+
+	private void updateText(){
+		text.setText("Button pressed "+counter+" times.");
+	}
 }
