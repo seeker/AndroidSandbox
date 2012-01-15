@@ -12,11 +12,10 @@
         <requestFocus />
     </EditText>
 
-    <TableLayout
-        android:id="@+id/table"
+    <fragment
+        android:id="@+id/list"
+        android:name="android.support.v4.app.ListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-    </TableLayout>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
