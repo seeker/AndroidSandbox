@@ -23,7 +23,7 @@ public class WallpaperSelectorActivity extends Activity {
 			
 			public void onClick(View v) {
 				Intent intent = new Intent("org.openintents.action.PICK_FILE");
-				intent.setData(Uri.parse("file:///sdcard/notepad.csv"));
+				intent.setData(Uri.parse("file:///sdcard/"));
 				intent.putExtra("org.openintents.extra.TITLE", "Please select a file");
 				startActivityForResult(intent, 1);
 				}
@@ -32,8 +32,13 @@ public class WallpaperSelectorActivity extends Activity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	Toast toast = Toast.makeText(getApplicationContext(), data.getData().toString(), Toast.LENGTH_SHORT);
-		toast.show();
-    	super.onActivityResult(requestCode, resultCode, data);
+    	if(requestCode == RESULT_OK){
+    		Toast toast = Toast.makeText(getApplicationContext(), data.getData().toString(), Toast.LENGTH_SHORT);
+    		toast.show();
+    		super.onActivityResult(requestCode, resultCode, data);
+    	}else{
+    		Toast toast = Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT);
+    		toast.show();
+    	}
     }
 }
