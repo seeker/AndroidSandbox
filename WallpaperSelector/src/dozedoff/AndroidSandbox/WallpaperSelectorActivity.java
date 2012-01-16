@@ -37,7 +37,7 @@ public class WallpaperSelectorActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent("org.openintents.action.PICK_FILE");
 				intent.setData(Uri.parse("file:///sdcard/Images/"));
-				intent.putExtra("org.openintents.extra.TITLE", "Please select a file");
+				intent.putExtra("org.openintents.extra.TITLE", "Please select a Image");
 				startActivityForResult(intent, 1);
 				}
 		});
@@ -47,6 +47,7 @@ public class WallpaperSelectorActivity extends Activity {
 			public void onClick(View v) {
 				try {
 					WallpaperManager.getInstance(getApplicationContext()).clear();
+					Toast.makeText(getApplicationContext(), "Wallpaper cleared", Toast.LENGTH_SHORT).show();
 				} catch (IOException e) {
 					Toast.makeText(getApplicationContext(), "Failed to clear Wallpaper", Toast.LENGTH_SHORT).show();
 				}
@@ -66,6 +67,7 @@ public class WallpaperSelectorActivity extends Activity {
     				in = new BufferedInputStream(new FileInputStream(new File(new URI(data.getData().toString()))));
     				WallpaperManager.getInstance(getApplicationContext()).setStream(in);
     				in.close();
+    				Toast.makeText(getApplicationContext(), "Wallpaper set", Toast.LENGTH_SHORT).show();
     			}catch(IOException ioe){
     				Toast.makeText(getApplicationContext(), "failed to set wallpaper: "+ioe.getMessage(), Toast.LENGTH_LONG).show();
     				Log.e("Set WP", ioe.getMessage());
