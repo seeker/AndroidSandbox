@@ -6,5 +6,6 @@
     <string name="select_text">Select Wallpaper</string>
     <string name="clear_text">Clear Wallpaper</string>
     <string name="nudge_text">Offset</string>
+    <string name="crop_text">Crop</string>
 
 </resources>

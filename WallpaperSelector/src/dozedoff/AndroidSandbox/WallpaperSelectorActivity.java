@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class WallpaperSelectorActivity extends Activity {
-	Button btnSelectWp,btnClearWp,btnNudgeWp;
+	Button btnSelectWp,btnClearWp,btnCropWp;
 	EditText txtXoffset, txtYoffset;
 	
     /** Called when the activity is first created. */
@@ -32,10 +32,7 @@ public class WallpaperSelectorActivity extends Activity {
         
         btnSelectWp = (Button)this.findViewById(R.id.btnSelectWp);
         btnClearWp = (Button)this.findViewById(R.id.btnClearWallpaper);
-        btnNudgeWp = (Button)this.findViewById(R.id.btnNudge);
-        
-        txtXoffset = (EditText)this.findViewById(R.id.txtXoffset);
-        txtYoffset = (EditText)this.findViewById(R.id.txtYoffset);
+        btnCropWp = (Button)this.findViewById(R.id.btnCrop);
         
         btnSelectWp.setOnClickListener(new OnClickListener() {
 			
@@ -59,24 +56,18 @@ public class WallpaperSelectorActivity extends Activity {
 			}
 		});
         
-        btnNudgeWp.setOnClickListener(new OnClickListener() {
+        btnCropWp.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				try{
-				float x = Float.parseFloat(txtXoffset.getText().toString());
-				float y = Float.parseFloat(txtYoffset.getText().toString());
-				WallpaperManager.getInstance(getApplicationContext()).setWallpaperOffsets(v.getApplicationWindowToken(), x, y);
-				Toast.makeText(getApplicationContext(), "Set Wallpaper offset", Toast.LENGTH_SHORT).show();
-				}catch(NumberFormatException nfe){
-					Toast.makeText(getApplicationContext(), "Entry must be a valid float number", Toast.LENGTH_SHORT).show();
-				}
+				Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI); i.putExtra("crop", "true");
+				startActivityForResult(i, 2);
 			}
 		});
     }
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if(resultCode == RESULT_OK){
+    	if(resultCode == RESULT_OK && requestCode == 1){
     		String path = data.getDataString().toString();
 
     		if(path.toLowerCase().endsWith(".jpg") || path.toLowerCase().endsWith(".png")){
@@ -100,6 +91,10 @@ public class WallpaperSelectorActivity extends Activity {
     	}else{
     		Toast toast = Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT);
     		toast.show();
+    	}
+    	
+    	if(resultCode == RESULT_OK && requestCode == 2){
+    		Toast.makeText(getApplicationContext(), data.getData().toString(), Toast.LENGTH_LONG).show();
     	}
 		super.onActivityResult(requestCode, resultCode, data);
     }
