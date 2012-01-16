@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 public class WallpaperSelectorActivity extends Activity {
 	Button btnSelectWp;
+	Button btnClearWp;
 	
     /** Called when the activity is first created. */
     @Override
@@ -29,6 +30,8 @@ public class WallpaperSelectorActivity extends Activity {
         setContentView(R.layout.main);
         
         btnSelectWp = (Button)this.findViewById(R.id.btnSelectWp);
+        btnClearWp = (Button)this.findViewById(R.id.btnClearWallpaper);
+        
         btnSelectWp.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
@@ -37,6 +40,17 @@ public class WallpaperSelectorActivity extends Activity {
 				intent.putExtra("org.openintents.extra.TITLE", "Please select a file");
 				startActivityForResult(intent, 1);
 				}
+		});
+        
+        btnClearWp.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				try {
+					WallpaperManager.getInstance(getApplicationContext()).clear();
+				} catch (IOException e) {
+					Toast.makeText(getApplicationContext(), "Failed to clear Wallpaper", Toast.LENGTH_SHORT).show();
+				}
+			}
 		});
     }
     

@@ -4,5 +4,6 @@
     <string name="hello">Hello World, WallpaperSelectorActivity!</string>
     <string name="app_name">WallpaperSelector</string>
     <string name="select_text">Select Wallpaper</string>
+    <string name="clear_text">Clear Wallpaper</string>
 
 </resources>
