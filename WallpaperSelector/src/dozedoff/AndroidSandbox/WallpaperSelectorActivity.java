@@ -17,11 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class WallpaperSelectorActivity extends Activity {
-	Button btnSelectWp;
-	Button btnClearWp;
+	Button btnSelectWp,btnClearWp,btnNudgeWp;
+	EditText txtXoffset, txtYoffset;
 	
     /** Called when the activity is first created. */
     @Override
@@ -31,6 +32,10 @@ public class WallpaperSelectorActivity extends Activity {
         
         btnSelectWp = (Button)this.findViewById(R.id.btnSelectWp);
         btnClearWp = (Button)this.findViewById(R.id.btnClearWallpaper);
+        btnNudgeWp = (Button)this.findViewById(R.id.btnNudge);
+        
+        txtXoffset = (EditText)this.findViewById(R.id.txtXoffset);
+        txtYoffset = (EditText)this.findViewById(R.id.txtYoffset);
         
         btnSelectWp.setOnClickListener(new OnClickListener() {
 			
@@ -50,6 +55,20 @@ public class WallpaperSelectorActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "Wallpaper cleared", Toast.LENGTH_SHORT).show();
 				} catch (IOException e) {
 					Toast.makeText(getApplicationContext(), "Failed to clear Wallpaper", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+        
+        btnNudgeWp.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				try{
+				float x = Float.parseFloat(txtXoffset.getText().toString());
+				float y = Float.parseFloat(txtYoffset.getText().toString());
+				WallpaperManager.getInstance(getApplicationContext()).setWallpaperOffsets(v.getApplicationWindowToken(), x, y);
+				Toast.makeText(getApplicationContext(), "Set Wallpaper offset", Toast.LENGTH_SHORT).show();
+				}catch(NumberFormatException nfe){
+					Toast.makeText(getApplicationContext(), "Entry must be a valid float number", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
