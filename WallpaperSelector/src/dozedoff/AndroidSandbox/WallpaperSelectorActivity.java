@@ -59,15 +59,20 @@ public class WallpaperSelectorActivity extends Activity {
         btnCropWp.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI); i.putExtra("crop", "true");
-				startActivityForResult(i, 2);
+				Intent intent = new Intent();
+
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+
+				startActivityForResult(Intent.createChooser(intent, "Complete action using"), 2);
 			}
 		});
     }
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if(resultCode == RESULT_OK && requestCode == 1){
+    	if(requestCode == 1){
+    		if(resultCode == RESULT_OK){
     		String path = data.getDataString().toString();
 
     		if(path.toLowerCase().endsWith(".jpg") || path.toLowerCase().endsWith(".png")){
@@ -88,14 +93,22 @@ public class WallpaperSelectorActivity extends Activity {
     		}else{
     			Toast.makeText(getApplicationContext(), "Not an image", Toast.LENGTH_SHORT).show();
     		}
-    	}else{
-    		Toast toast = Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT);
-    		toast.show();
+    		}else{
+        		Toast toast = Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT);
+        		toast.show();
+        	}
     	}
     	
-    	if(resultCode == RESULT_OK && requestCode == 2){
-    		Toast.makeText(getApplicationContext(), data.getData().toString(), Toast.LENGTH_LONG).show();
+    	if(requestCode == 2 && resultCode == RESULT_OK){
+    		Uri dat = data.getData();
+    		
+    		if(dat != null){
+    			Toast.makeText(getApplicationContext(), data.getData().getEncodedPath(), Toast.LENGTH_LONG).show();
+    		}else{
+    			Toast.makeText(getApplicationContext(),"No valid path returned", Toast.LENGTH_LONG).show();
+    		}
     	}
+    	
 		super.onActivityResult(requestCode, resultCode, data);
     }
 }
