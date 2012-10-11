@@ -71,33 +71,35 @@ public class WallpaperSelectorActivity extends Activity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if(requestCode == 1){
-    		if(resultCode == RESULT_OK){
-    		String path = data.getDataString().toString();
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				String path = data.getDataString().toString();
 
-    		if(path.toLowerCase().endsWith(".jpg") || path.toLowerCase().endsWith(".png")){
-    			InputStream in = null;
-    			try{
-    				
-    				in = new BufferedInputStream(new FileInputStream(new File(new URI(data.getData().toString()))));
-    				WallpaperManager.getInstance(getApplicationContext()).setStream(in);
-    				in.close();
-    				Toast.makeText(getApplicationContext(), "Wallpaper set", Toast.LENGTH_SHORT).show();
-    			}catch(IOException ioe){
-    				Toast.makeText(getApplicationContext(), "failed to set wallpaper: "+ioe.getMessage(), Toast.LENGTH_LONG).show();
-    				Log.e("Set WP", ioe.getMessage());
-    			} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (path.toLowerCase().endsWith(".jpg") || path.toLowerCase().endsWith(".png")) {
+					InputStream in = null;
+					try {
+
+						in = new BufferedInputStream(new FileInputStream(new File(new URI(data.getData().toString()))));
+						WallpaperManager.getInstance(getApplicationContext()).setStream(in);
+						in.close();
+						Toast.makeText(getApplicationContext(),	"Wallpaper set", Toast.LENGTH_SHORT).show();
+					} catch (IOException ioe) {
+						Toast.makeText(getApplicationContext(),	"failed to set wallpaper: " + ioe.getMessage(), Toast.LENGTH_LONG).show();
+						Log.e("Set WP", ioe.getMessage());
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getApplicationContext(), "Not an image",
+							Toast.LENGTH_SHORT).show();
 				}
-    		}else{
-    			Toast.makeText(getApplicationContext(), "Not an image", Toast.LENGTH_SHORT).show();
-    		}
-    		}else{
-        		Toast toast = Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT);
-        		toast.show();
-        	}
-    	}
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"No file selected", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		}
     	
     	if(requestCode == 2 && resultCode == RESULT_OK){
     		Uri dat = data.getData();
